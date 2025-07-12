@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ReWear - User Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-blue-200 min-h-screen p-6 font-sans">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold text-blue-800">User Dashboard</h1>
+    <button onclick="logout()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full">Logout</button>
+  </div>
+
+  <!-- Profile Section -->
+  <div class="bg-white rounded-2xl shadow-xl p-6 mb-8 flex gap-8 items-center">
+    <div class="w-28 h-28 rounded-full bg-blue-300 flex items-center justify-center text-white text-3xl font-bold">
+      Y
+    </div>
+    <div class="flex-1 space-y-1">
+      <h2 class="text-2xl font-semibold text-blue-700" id="userName">Yesha Doshi</h2>
+      <p class="text-blue-500" id="userEmail">yesha@example.com</p>
+      <p class="text-blue-500" id="userUsername">@yeshadoshi</p>
+      <p class="text-blue-600" id="userContact">📞 +91 9876543210</p>
+      <p class="text-blue-600" id="userAddress">🏠 123, Nehru Street, Mumbai</p>
+    </div>
+  </div>
+
+  <!-- Add Listing Form -->
+  <div class="bg-white p-4 rounded-xl shadow-md mb-6">
+    <h3 class="text-lg font-semibold text-blue-800 mb-2">Add New Listing</h3>
+    <form id="listingForm" class="grid gap-4">
+
+
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full">
+        ➕ Add Listing
+      </button>
+    </form>
+  </div>
+
+  <!-- My Listings -->
+  <div class="mb-10">
+    <h3 class="text-xl font-semibold text-blue-800 mb-4">My Listings</h3>
+    <div id="listingContainer" class="grid grid-cols-2 md:grid-cols-4 gap-5">
+      <!-- Listings will be added here -->
+    </div>
+  </div>
+
+  <!-- My Purchases -->
+  <div class="mb-6">
+    <h3 class="text-xl font-semibold text-blue-800 mb-4">My Purchases</h3>
+    <div id="purchaseContainer" class="grid grid-cols-2 md:grid-cols-4 gap-5">
+      <!-- Purchases will be added here -->
+    </div>
+    <p id="noPurchases" class="text-center text-gray-500 mt-4 hidden">No purchases yet.</p>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
