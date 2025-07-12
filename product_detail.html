@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReWear - Upload Product</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@500&display=swap');
+
+    :root {
+      --primary-color: #ddbea9;
+      --light-bg: #fef6f3;
+      --hover-color: #caa893;
+      --font-color: #333;
+      --accent-color: #7a5c58;
+      --neutral-light: #f3f3f3;
+      --neutral-dark: #ececec;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      color: var(--font-color);
+    }
+
+    .container {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .upload-box, .description-box {
+      background-color: var(--primary-color);
+      border-radius: 10px;
+      padding: 1rem;
+      min-height: 300px;
+    }
+
+    .upload-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #aaa;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .upload-box img {
+      max-width: 100%;
+      max-height: 270px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .upload-text {
+      position: absolute;
+      color: #555;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .input-field {
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: #fefefe;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.2s ease;
+    }
+
+    .input-field:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(122, 92, 88, 0.2);
+      outline: none;
+    }
+
+    .description-box form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .description-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .save-btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background-color: white;
+      border: 2px solid var(--accent-color);
+      border-radius: 20px;
+      color: var(--accent-color);
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .save-btn:hover {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    .status-select {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: var(--neutral-light);
+      width: 100%;
+    }
+
+    .previous-listings {
+      grid-column: span 2;
+    }
+
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .listing-card {
+      background-color: var(--neutral-dark);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .listing-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .listing-title {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <!-- LEFT: Upload Box with Click & Preview -->
+    <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+      <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)" />
+      <div class="upload-text" id="uploadText">Click or Drag to Add Images</div>
+      <img id="preview" style="display: none;" />
+    </div>
+
+    <!-- RIGHT: Product Description Form -->
+    <div class="description-box">
+      <form id="listingForm">
+        <div class="description-grid">
+          <input type="text" id="listingName" placeholder="Item name (e.g., Kurti)" class="input-field" required />
+          <input type="text" id="listingPattern" placeholder="Pattern (e.g., Floral)" class="input-field" required />
+          <input type="text" id="listingFabric" placeholder="Fabric (e.g., Cotton)" class="input-field" required />
+          <input type="text" id="listingSize" placeholder="Size (e.g., M)" class="input-field" required />
+          <input type="text" id="listingFit" placeholder="Fit (e.g., Relaxed)" class="input-field" required />
+          <input type="text" id="listingCare" placeholder="Material & Care (e.g., Machine Wash)" class="input-field" required />
+          <input type="text" id="listingPrice" placeholder="Price (e.g., ₹1200)" class="input-field" required />
+        </div>
+        <select class="status-select">
+          <option>Available</option>
+          <option>Swap</option>
+        </select>
+        <button type="submit" class="save-btn">Save</button>
+      </form>
+    </div>
+
+    <!-- Previous Listings -->
+    <div class="previous-listings">
+      <h3>Previous Listings</h3>
+      <div class="listings-grid">
+        <div class="listing-card">
+          <img src="portrait-young-japanese-woman.jpg" alt="Product 1">
+          <div class="listing-title">Zara Blazer</div>
+        </div>
+        <div class="listing-card">
+          <img src="top.jpg" alt="Product 2">
+          <div class="listing-title">H&M Top</div>
+        </div>
+        <div class="listing-card">
+          <img src="jeans.jpg" alt="Product 3">
+          <div class="listing-title">Levi Denim</div>
+        </div>
+        <div class="listing-card">
+          <img src="Tight Dress Outfit.jpg" alt="Product 4">
+          <div class="listing-title">NewMe Dress</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const preview = document.getElementById('preview');
+        const uploadText = document.getElementById('uploadText');
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+        uploadText.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
