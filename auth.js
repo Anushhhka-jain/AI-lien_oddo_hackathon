@@ -1,40 +1,51 @@
-const BASE_URL = 'http://localhost:8000'; // FastAPI backend
+const BASE_URL = 'http://localhost:8000'; // Your FastAPI backend URL
 
-// LOGIN
+// ---------------------
+// LOGIN FUNCTIONALITY
+// ---------------------
 const loginForm = document.getElementById("loginForm");
 loginForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
+
   const email = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
 
-  const res = await fetch(`${BASE_URL}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
+  try {
+    const res = await fetch(`${BASE_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  if (res.ok) {
-    // ✅ Admin user check
-    if (email === "hello@rewear.com" && password === "admin123") {
-      alert("Welcome, Admin!");
-      localStorage.setItem("token", data.token);  // optional but good to keep
-      window.location.href = "screen8.html";      // redirect to admin dashboard
-    } else {
-      alert("Login successful!");
+    if (res.ok) {
       localStorage.setItem("token", data.token);
-      window.location.href = "dashboard.html";    // redirect to user dashboard
+
+      // Role-based redirect
+      if (email === "hello@rewear.com" && password === "admin123") {
+        alert("Welcome, Admin!");
+        window.location.href = "screen8.html"; // Admin dashboard
+      } else {
+        alert("Welcome to REWEAR!");
+        window.location.href = "screen3.html"; // User homepage
+      }
+    } else {
+      alert(data.detail || data.message || "Login failed.");
     }
-  } else {
-    alert(data.detail || data.message || "Login failed. Please check your credentials.");
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Something went wrong. Please try again.");
   }
 });
 
-// REGISTER
+// ------------------------
+// REGISTER FUNCTIONALITY
+// ------------------------
 const registerForm = document.getElementById("registerForm");
 registerForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
+
   const name = document.getElementById("name").value;
   const username = document.getElementById("username").value;
   const email = document.getElementById("registerEmail").value;
@@ -46,32 +57,45 @@ registerForm?.addEventListener("submit", async (e) => {
   formData.append("email", email);
   formData.append("password", password);
 
-  const res = await fetch(`${BASE_URL}/create-profile/`, {
-    method: "POST",
-    body: formData,
-  });
+  try {
+    const res = await fetch(`${BASE_URL}/create-profile/`, {
+      method: "POST",
+      body: formData,
+    });
 
-  const data = await res.json();
-  if (res.ok) {
-    alert("Registered successfully!");
-    window.location.href = "index.html";
-  } else {
-    alert(data.detail || data.message);
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Registered successfully!");
+      window.location.href = "index.html";
+    } else {
+      alert(data.detail || data.message);
+    }
+  } catch (error) {
+    console.error("Registration error:", error);
+    alert("Something went wrong. Please try again.");
   }
 });
 
-// FORGOT PASSWORD (optional logic)
+// ------------------------
+// OPTIONAL: Forgot Password
+// ------------------------
 const forgotPasswordBtn = document.getElementById("forgotPassword");
 forgotPasswordBtn?.addEventListener("click", async () => {
   const email = prompt("Enter your email:");
   if (!email) return;
 
-  const res = await fetch(`${BASE_URL}/forgot-password`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email }),
-  });
+  try {
+    const res = await fetch(`${BASE_URL}/forgot-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
 
-  const data = await res.json();
-  alert(data.message || "Check your email");
+    const data = await res.json();
+    alert(data.message || "Check your email.");
+  } catch (error) {
+    console.error("Password reset error:", error);
+    alert("Something went wrong.");
+  }
 });
