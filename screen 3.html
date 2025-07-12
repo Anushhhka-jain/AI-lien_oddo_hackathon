@@ -54,44 +54,9 @@
       color: var(--rosegold);
     }
 
-    .dashboard-actions {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .search-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .search-input {
-      padding: 8px 15px;
-      border: 1px solid #ddd;
-      border-radius: 20px;
-      font-family: 'Perpetua', serif;
-      width: 0;
-      opacity: 0;
-      transition: all 0.3s ease;
-      outline: none;
-    }
-
-    .search-input.active {
-      width: 200px;
-      opacity: 1;
-      margin-right: 10px;
-    }
-
-    .search-icon, .user-icon, .cart-icon {
-      font-size: 1.2rem;
-      color: var(--dark-gray);
+    .dashboard-actions i {
+      margin-left: 20px;
       cursor: pointer;
-      transition: color 0.3s;
-    }
-
-    .search-icon:hover, .user-icon:hover, .cart-icon:hover {
-      color: var(--rosegold);
     }
 
     .hero-section {
@@ -307,10 +272,6 @@
       .footer-logo {
         font-size: 2rem;
       }
-      
-      .search-input.active {
-        width: 150px;
-      }
     }
 
     @media (max-width: 480px) {
@@ -321,16 +282,11 @@
       
       .dashboard-nav {
         gap: 15px;
-        font-size: 0.9rem;
       }
       
       .footer-links {
         flex-direction: column;
         gap: 10px;
-      }
-      
-      .search-input.active {
-        width: 120px;
       }
     }
   </style>
@@ -345,12 +301,12 @@
       <a href="#">Contact</a>
     </nav>
     <div class="dashboard-actions">
-      <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search...">
-        <i class="fas fa-search search-icon"></i>
-      </div>
-      <i class="fas fa-user user-icon"></i>
-      <i class="fas fa-shopping-bag cart-icon"></i>
+      <i class="fas fa-search"></i>
+    <a href="screen6.html">
+        <i class="fas fa-user"></i>
+    </a>
+
+      <i class="fas fa-shopping-bag"></i>
     </div>
   </header>
 
@@ -372,10 +328,12 @@
         <img src="top.jpeg" alt="Top">
         <div class="category-title">TOPS</div>
       </div>
-      <div class="category-card" onclick="location.href='#'">
+     
+    <div class="category-card" onclick="location.href='#'">
         <img src="dress.jpeg" alt="Dress">
-        <div class="category-title">DRESSES</div>
-      </div>
+    <div class="category-title">DRESSES</div>
+     
+    </div>
       <div class="category-card" onclick="location.href='#'">
         <img src="shirt.jpeg" alt="Shirt">
         <div class="category-title">SHIRTS</div>
@@ -384,9 +342,10 @@
         <img src="bottoms.jpeg" alt="Bottoms">
         <div class="category-title">BOTTOMS</div>
       </div>
-      <div class="category-card" onclick="location.href='#'">
+      <div class="category-card" onclick="location.href='screen5.html'">
         <img src="jacket.jpeg" alt="Jacket">
         <div class="category-title">JACKETS</div>
+
       </div>
       <div class="category-card" onclick="location.href='#'">
         <img src="coords.jpeg" alt="Coords">
@@ -453,39 +412,6 @@
         window.location.href = '#'; // Replace with actual link
       });
     });
-
-    // Search functionality
-    const searchIcon = document.querySelector('.search-icon');
-    const searchInput = document.querySelector('.search-input');
-    
-    searchIcon.addEventListener('click', function() {
-      searchInput.classList.toggle('active');
-      if (searchInput.classList.contains('active')) {
-        searchInput.focus();
-      }
-    });
-
-    // Close search when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest('.search-container')) {
-        searchInput.classList.remove('active');
-      }
-    });
-
-    // User and cart icon functionality
-    document.querySelector('.user-icon').addEventListener('click', function() {
-      window.location.href = '#'; // Replace with user account page
-    });
-
-    document.querySelector('.cart-icon').addEventListener('click', function() {
-      window.location.href = '#'; // Replace with cart page
-    });
   </script>
- <script>
-  // Make profile icon open dashboard
-  document.querySelector('.user-icon').addEventListener('click', function() {
-    window.location.href = 'user-dashboard.html'; // Links to dashboard
-  });
- </script>
 </body>
 </html>
