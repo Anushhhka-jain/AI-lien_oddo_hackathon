@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000/api'; // Replace with your backend API URL
+const BASE_URL = 'http://localhost:8000'; // FastAPI backend
 
 // LOGIN
 const loginForm = document.getElementById("loginForm");
@@ -14,12 +14,20 @@ loginForm?.addEventListener("submit", async (e) => {
   });
 
   const data = await res.json();
+
   if (res.ok) {
-    alert("Login successful!");
-    localStorage.setItem("token", data.token);
-    window.location.href = "dashboard.html";
+    // ✅ Admin user check
+    if (email === "hello@rewear.com" && password === "admin123") {
+      alert("Welcome, Admin!");
+      localStorage.setItem("token", data.token);  // optional but good to keep
+      window.location.href = "screen8.html";      // redirect to admin dashboard
+    } else {
+      alert("Login successful!");
+      localStorage.setItem("token", data.token);
+      window.location.href = "dashboard.html";    // redirect to user dashboard
+    }
   } else {
-    alert(data.message);
+    alert(data.detail || data.message || "Login failed. Please check your credentials.");
   }
 });
 
@@ -32,10 +40,15 @@ registerForm?.addEventListener("submit", async (e) => {
   const email = document.getElementById("registerEmail").value;
   const password = document.getElementById("registerPassword").value;
 
-  const res = await fetch(`${BASE_URL}/register`, {
+  const formData = new FormData();
+  formData.append("full_name", name);
+  formData.append("username", username);
+  formData.append("email", email);
+  formData.append("password", password);
+
+  const res = await fetch(`${BASE_URL}/create-profile/`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, username, email, password }),
+    body: formData,
   });
 
   const data = await res.json();
@@ -43,11 +56,11 @@ registerForm?.addEventListener("submit", async (e) => {
     alert("Registered successfully!");
     window.location.href = "index.html";
   } else {
-    alert(data.message);
+    alert(data.detail || data.message);
   }
 });
 
-// FORGOT PASSWORD
+// FORGOT PASSWORD (optional logic)
 const forgotPasswordBtn = document.getElementById("forgotPassword");
 forgotPasswordBtn?.addEventListener("click", async () => {
   const email = prompt("Enter your email:");
