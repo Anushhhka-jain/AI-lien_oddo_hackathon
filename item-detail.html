@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReWear - Item Detail</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@500&display=swap');
+
+    :root {
+      --primary-color: #ddbea9;
+      --light-bg: #fef6f3;
+      --hover-color: #caa893;
+      --font-color: #333;
+      --accent-color: #7a5c58;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      color: var(--font-color);
+    }
+
+    .container {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .main-image {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      background-color: #f3f3f3;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .main-image img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .logo-overlay {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 80px;
+      opacity: 0.9;
+    }
+
+    .thumbnail-slider {
+      display: flex;
+      overflow: hidden;
+      position: relative;
+      margin-top: 1rem;
+    }
+
+    .slider-container {
+      display: flex;
+      gap: 1rem;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .thumbnail img {
+      width: 100px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 35%;
+      width: 30px;
+      height: 40px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .left-arrow {
+      left: 0;
+    }
+
+    .right-arrow {
+      right: 0;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      width: 25%;
+      max-height: 90%;
+      background-color: white;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .item-info h2 {
+      margin-top: 0;
+      color: var(--accent-color);
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+    }
+
+    .price {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #222;
+      margin: 0.5rem 0;
+    }
+
+    .seller {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .description-box,
+    .specs-box {
+      background-color: var(--primary-color);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .description-box p {
+      margin: 0;
+    }
+
+    .specs-box p strong {
+      font-weight: bold;
+    }
+
+    .specs-box p span {
+      font-weight: 400;
+      opacity: 0.85;
+    }
+
+    .actions button {
+      background-color: var(--primary-color);
+      border: none;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-right: 1rem;
+      transition: background-color 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .actions button:hover {
+      background-color: var(--hover-color);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .modal-content {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <!-- LEFT: Images -->
+    <div>
+      <div class="main-image">
+        <img src="main image.jpg" alt="Main Product Image">
+        <img src="main logo.jpg" alt="ReWear Logo" class="logo-overlay">
+      </div>
+      <div class="thumbnail-slider">
+        <div class="arrow left-arrow" onclick="scrollThumbnails(-1)">&#8249;</div>
+        <div class="slider-container" id="sliderContainer">
+          <div class="thumbnail"><img src="portrait-young-japanese-woman.jpg" alt="Angle 1" onclick="openModal(this.src)"></div>
+          <div class="thumbnail"><img src="portrait-young-japanese-woman-with-jacket (1).jpg" alt="Angle 2" onclick="openModal(this.src)"></div>
+          <div class="thumbnail"><img src="young-japanese-woman-portrait-copy-space.jpg" alt="Angle 3" onclick="openModal(this.src)"></div>
+          <div class="thumbnail"><img src="young-japanese-woman-portrait-sitting-chair.jpg" alt="Main" onclick="openModal(this.src)"></div>
+        </div>
+        <div class="arrow right-arrow" onclick="scrollThumbnails(1)">&#8250;</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Info -->
+    <div class="item-info">
+      <h2>Zara Blazer</h2>
+      <div class="price">₹3000 <span style="font-size: 1rem; color: #d44;">(58% OFF)</span></div>
+      <div class="seller">Sold by: Ananya Singh</div>
+
+      <div class="description-box">
+        <p>Stylish & good-quality blazer with soft material,and in great condition.</p>
+      </div>
+
+      <div class="specs-box">
+        <h4>Product Details:</h4>
+        <p><strong>Pattern:</strong> <span>Solid</span></p>
+        <p><strong>Fabric:</strong> <span>Polyester</span></p>
+        <p><strong>Size:</strong> <span>M</span></p>
+        <p><strong>Fit:</strong> <span>Regular Fit</span></p>
+        <p><strong>Material & Care:</strong> <span>Machine Wash</span></p>
+      </div>
+
+      <div class="actions">
+        <button>Swap Request</button>
+        <button>Redeem via Points</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="imageModal" onclick="closeModal(event)">
+    <span class="modal-close">&times;</span>
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="Expanded View">
+    </div>
+  </div>
+
+  <script>
+    function openModal(src) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      modalImg.src = src;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal(event) {
+      if (event.target.id === 'imageModal' || event.target.className === 'modal-close') {
+        document.getElementById('imageModal').style.display = 'none';
+      }
+    }
+
+    function scrollThumbnails(direction) {
+      const container = document.getElementById('sliderContainer');
+      container.scrollBy({
+        left: direction * 120,
+        behavior: 'smooth'
+      });
+    }
+  </script>
+</body>
+</html>
+
+
