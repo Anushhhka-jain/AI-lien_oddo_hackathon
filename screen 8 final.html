@@ -45,8 +45,8 @@
     }
 
     .logo-img {
-      height: 60px;
-      margin-bottom: 10px;
+      height: 100px;
+      margin-bottom: 100px;
     }
 
     /* Dashboard Header */
@@ -862,11 +862,11 @@
           <!-- Product 1 -->
           <div class="product-card listing-row" data-status="active">
             <div class="product-image-container">
-              <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Vintage Denim Jacket" class="product-image">
+               <img src="levi jeans.jpeg" alt="Levis Jeans">
             </div>
             <div class="product-details">
-              <h3 class="product-title">Vintage Denim Jacket</h3>
-              <div class="product-price">₹3,499</div>
+              <h3 class="product-title">LEVI JEANS</h3>
+              <div class="product-price">₹2,500</div>
               <div>
                 <span class="status-badge status-active">Active</span>
               </div>
@@ -880,11 +880,11 @@
           <!-- Product 2 -->
           <div class="product-card listing-row" data-status="pending">
             <div class="product-image-container">
-              <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Retro Blazer Set" class="product-image">
+              <img src="dress.jpeg" alt="Newme Dress">
             </div>
             <div class="product-details">
-              <h3 class="product-title">Retro Blazer Set</h3>
-              <div class="product-price">₹4,857</div>
+              <h3 class="product-title">NEWME DRESS</h3>
+              <div class="product-price">₹2,000</div>
               <div>
                 <span class="status-badge status-pending">Pending</span>
               </div>
@@ -898,11 +898,11 @@
           <!-- Product 3 -->
           <div class="product-card listing-row" data-status="active">
             <div class="product-image-container">
-              <img src="https://images.unsplash.com/photo-1539533018447-63fcce2678e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Classic Cape" class="product-image">
+              <img src="H&M top.jpeg" alt="H&M Top">
             </div>
             <div class="product-details">
-              <h3 class="product-title">Classic Cape</h3>
-              <div class="product-price">₹2,676</div>
+              <h3 class="product-title">H&M TOP</h3>
+              <div class="product-price">₹1,500</div>
               <div>
                 <span class="status-badge status-active">Active</span>
               </div>
@@ -916,11 +916,11 @@
           <!-- Product 4 -->
           <div class="product-card listing-row" data-status="sold">
             <div class="product-image-container">
-              <img src="https://images.unsplash.com/photo-1520367445093-50dc08a59d9d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="White Choice Set" class="product-image">
+              <img src="zara blazer.jpeg" alt="Zara Blazer">
             </div>
             <div class="product-details">
-              <h3 class="product-title">White Choice Set</h3>
-              <div class="product-price">₹5,992</div>
+              <h3 class="product-title">ZARA BLAZER</h3>
+              <div class="product-price">₹3,000</div>
               <div>
                 <span class="status-badge status-inactive">Sold</span>
               </div>
@@ -1076,5 +1076,14 @@
       });
     });
   </script>
+	<script>
+  const token = localStorage.getItem("token");
+
+  // If user not logged in, redirect to login
+  if (!token) {
+    alert("Access denied. Please log in first.");
+    window.location.href = "index.html";
+  }
+</script>
 </body>
 </html>
